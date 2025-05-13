@@ -13,7 +13,7 @@
     # Installs 'google-clasp', the command-line tool for Google Apps Script.
     pkgs.google-clasp
     # Installs 'go-task', a task runner / build tool written in Go.
-    pkgs.go-task
+    pkgs.go
   ];
 
   # Defines environment variables that will be available within the workspace shell

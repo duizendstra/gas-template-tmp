@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <style>
+      body { font-family: sans-serif; margin: 20px; background-color: #f4f4f4; }
+      .container { background-color: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+      label { display: block; margin-bottom: 8px; font-weight: bold; }
+      input[type="text"] { width: calc(100% - 22px); padding: 10px; margin-bottom: 20px; border: 1px solid #ddd; border-radius: 4px; }
+      button { padding: 10px 15px; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; }
+      button:hover { background-color: #0056b3; }
+      #result { margin-top: 20px; padding: 15px; border: 1px solid #eee; border-radius: 4px; background-color: #e9ecef; min-height: 40px; }
+      .error { color: red; font-weight: bold; }
+      .success { color: green; }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Simple Hello App</h1>
+      
+      <label for="nameInput">Enter your name:</label>
+      <input type="text" id="nameInput" placeholder="e.g., World">
+      
+      <button onclick="sayHello()">Say Hello</button>
+      
+      <div id="result">
+        <!-- Greeting or error will appear here -->
+      </div>
+    </div>
+
+    <script>
+      function showLoading() {
+        document.getElementById('result').innerHTML = "Processing...";
+        document.getElementById('result').className = ''; // Reset class
+      }
+
+      function showSuccess(message) {
+        document.getElementById('result').innerHTML = message;
+        document.getElementById('result').className = 'success';
+      }
+
+      function showError(errorMessage) {
+        document.getElementById('result').innerHTML = "Error: " + errorMessage;
+        document.getElementById('result').className = 'error';
+        console.error("Client-side error handler:", errorMessage);
+      }
+
+      function sayHello() {
+        showLoading();
+        const name = document.getElementById('nameInput').value || "World"; // Default to "World" if empty
+
+        google.script.run
+          .withSuccessHandler(function(response) {
+            // The server-side function 'handleHelloRequest' should return an object
+            // like { status: 'success', message: 'Hello, Name!' }
+            // or { status: 'error', message: 'Something went wrong.' }
+            if (response && response.status === 'success') {
+              showSuccess(response.message);
+            } else if (response && response.message) {
+              showError(response.message); // Handle server-side operational errors
+            } else {
+              showError("Received an unexpected response from the server.");
+            }
+          })
+          .withFailureHandler(function(error) {
+            // This handles errors in communication or unhandled exceptions on the server
+            showError(error.message || "An unknown server error occurred.");
+          })
+          .handleHelloRequest(name); // Call the server-side function
+      }
+    </script>
+  </body>
+</html>
