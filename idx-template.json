@@ -1,6 +1,6 @@
 {
-  "name": "Google Apps Script Modular Starters",
-  "description": "Start a Google Apps Script project with a well-defined modular structure.",
+  "name": "Google Apps Script Kickstart for Firebase Studio",
+  "description": "Jumpstart your Google Apps Script development on Firebase Studio with this collection of starter templates. Designed to boost productivity and ensure high-quality, maintainable code from day one.",
   "categories": [
     "Google Workspace",
     "Serverless",
@@ -15,9 +15,9 @@
       "type": "enum",
       "default": "apps-script-basic-module-template",
       "options": {
-        "apps-script-basic-module-template": "Basic Modular Apps Script (Crockford-style)",
+        "apps-script-basic-module-template": "Kickstart your Apps Script project with a foundational modular structure (Crockford-style) for organized and maintainable code.",
         "apps-script-script-engine-template": "Kickstart your Google Apps Script projects with this robust, highly configurable template that includes essential development tools right out of the box.",
-        "apps-script-basic-starter-template": "Basic starter"
+        "apps-script-basic-starter-template": "Kickstart your Apps Script journey with a minimal, bare-bones starter template, perfect for simple scripts or learning the basics."
       },
       "required": true
     }
