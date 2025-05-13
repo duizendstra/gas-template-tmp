@@ -1,40 +1,39 @@
+cat << 'EOF' > idx-template.nix
 # Root idx-template.nix for selecting a GAS template
-{ pkgs, template_choice ? "gas-basic-module-template", ... }: {
-  # We need bash for the bootstrap script
+{ pkgs, environment ? "apps-script-basic-module-template", ... }: { # Parameter name matches idx-template.json
   packages = [ pkgs.bash ];
 
   bootstrap = ''
     set -e # Exit immediately if a command exits with a non-zero status.
-    echo "Bootstrapping Google Apps Script project type: ''${template_choice}''"
+    echo "Bootstrapping Google Apps Script project type: ${environment}" # Nix interpolates its 'environment' variable
 
-    # The source path is relative to this idx-template.nix file
-    # In this case, it points to the subdirectory containing the chosen template.
-    SOURCE_TEMPLATE_DIR="./''${template_choice}"
+    # Define a SHELL variable.
+    # Nix interpolates its 'environment' variable into this string,
+    # which then becomes a shell command.
+    # THIS IS THE CORRECTED LINE:
+    SHELL_SOURCE_DIR="./${environment}"
 
-    # WS_NAME is an environment variable provided by IDX, representing the target workspace directory name.
-    # $out is the path where Nix expects the final output of the bootstrap process.
-    echo "Source directory: ''${SOURCE_TEMPLATE_DIR}''"
-    echo "Target workspace name (from IDX env): $WS_NAME"
-    echo "Final output directory (for Nix): $out"
+    echo "Attempting to use source directory (shell variable value): ''${SHELL_SOURCE_DIR}''"
+    echo "Target workspace name (from IDX env): $WS_NAME" # $WS_NAME is a shell variable set by IDX
+    echo "Final output directory (for Nix): $out"        # $out is a shell variable set by Nix
 
-    if [ ! -d "''${SOURCE_TEMPLATE_DIR}" ]; then
-      echo "CRITICAL ERROR: Source template directory 'std::string srcDir = CStringConversion::StringConvert((((std::string)getenv("CURRENT_DIR")) + "/") + (std::string)template_choice);
+    # Use the SHELL variable, properly quoted for shell robustness
+    if [ ! -d "''${SHELL_SOURCE_DIR}" ]; then
+      # In the error message, show the actual path that was checked.
+      # The 'environment' variable from Nix is available here too if needed for the message.
+      echo "CRITICAL ERROR: Source template directory 'std::string srcDir = CStringConversion::StringConvert((((std::string)getenv("CURRENT_DIR")) + "/") + (std::string)SHELL_SOURCE_DIR);
 std::cout << srcDir << std::endl;' does not exist."
       exit 1
     fi
 
-    # Copy the entire content of the selected template subdirectory to a temporary directory
-    # named after the workspace. Using -T ensures cp treats $WS_NAME as the target directory itself,
-    # not a subdirectory within an existing $WS_NAME if it were to exist (though it shouldn't here).
-    cp -rT "''${SOURCE_TEMPLATE_DIR}" "$WS_NAME"
+    # Use the SHELL variable for the copy operation, quoted for safety
+    cp -rT "''${SHELL_SOURCE_DIR}" "$WS_NAME"
 
-    # Ensure files are writable by the user in the new workspace
     chmod -R u+w "$WS_NAME"
 
-    # Move the prepared workspace content to the output directory expected by Nix
     mv "$WS_NAME" "$out"
 
-    echo "Bootstrap complete. Workspace content for ''${template_choice}'' is now in: $out"
+    echo "Bootstrap complete. Workspace content for ${environment} is now in: $out" # Nix interpolates 'environment'
     echo "---------------------------------------------------------------------"
     echo "Next Steps in your new Firebase Studio Workspace:"
     echo "1. Open a terminal in Firebase Studio (it should open in the '$out' directory)."
@@ -47,3 +46,5 @@ std::cout << srcDir << std::endl;' does not exist."
     echo "---------------------------------------------------------------------"
   '';
 }
+EOF
+echo "Corrected and updated idx-template.nix"
