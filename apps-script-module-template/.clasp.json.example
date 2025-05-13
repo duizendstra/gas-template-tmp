@@ -1,0 +1,5 @@
+{
+  "scriptId": "YOUR_SCRIPT_ID_HERE",
+  "rootDir": "./src",
+  "projectId": "YOUR_GCP_PROJECT_ID_HERE_IF_ANY"
+}

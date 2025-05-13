@@ -51,22 +51,18 @@
 
         google.script.run
           .withSuccessHandler(function(response) {
-            // The server-side function 'handleHelloRequest' should return an object
-            // like { status: 'success', message: 'Hello, Name!' }
-            // or { status: 'error', message: 'Something went wrong.' }
             if (response && response.status === 'success') {
               showSuccess(response.message);
             } else if (response && response.message) {
-              showError(response.message); // Handle server-side operational errors
+              showError(response.message);
             } else {
               showError("Received an unexpected response from the server.");
             }
           })
           .withFailureHandler(function(error) {
-            // This handles errors in communication or unhandled exceptions on the server
             showError(error.message || "An unknown server error occurred.");
           })
-          .handleHelloRequest(name); // Call the server-side function
+          .handleHelloRequest(name); // Call the server-side function in webapp.js
       }
     </script>
   </body>

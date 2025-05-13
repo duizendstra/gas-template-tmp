@@ -1,51 +1,85 @@
+/* global LOG_LEVEL */
+
 /**
- * Creates an error manager for generating and throwing customized errors.
- * @param {Object} [params={}] - Configuration parameters for the ErrorManager.
- * @param {boolean} [params.logErrors=false] - Flag to enable or disable error logging.
- * @param {Object} [params.logManager=console] - Custom logger for logging errors.
- * @returns {Object} An object with methods for error management.
+ * Logging manager for Google Apps Script.
+ * @param {Object} params - Configuration parameters for the log manager.
+ * @param {string} params.logLevel - Log level (e.g., 'INFO', 'WARNING', 'ERROR'), defaults to 'INFO'.
+ * @returns {Object} An object containing logging methods.
  */
-const gasErrorManager = (params = {}) => {
-    const {
-      logErrors = false,
-      logManager = console
-    } = params;
+const gasLogManager = (params = {}) => {
+    const { logLevel = 'INFO' } = params;
   
-    logManager.log(`gasErrorManager(${JSON.stringify(params)})`);
-  
-    /**
-     * Throws a customized error with additional properties. Optionally logs it to the console based on the config.
-     * @param {Object} params - Parameters for the error.
-     * @param {string} [params.message="No message provided"] - The error message.
-     * @param {string} [params.errorCode="1001"] - A unique code identifying the error type.
-     * @param {Object} [params.additionalProperties={}] - Additional properties to be added to the error.
-     * @throws {Error} Throws a customized error.
-     */
-    const throwError = (params = {}) => {
-      const { 
-        message = "No message provided", 
-        errorCode = "1001", 
-        additionalProperties = {} 
-      } = params;
-  
-      const error = new Error(message);
-      error.errorCode = errorCode;
-      error.errorId = `error-${Date.now()}-${Math.floor(Math.random() * 10000)}`;
-  
-      // Add any other additional properties
-      for (const [key, value] of Object.entries(additionalProperties)) {
-        error[key] = value;
-      }
-  
-      // Log the error using logManager if logErrors is true
-      if (logErrors) {
-        logManager.error(error);
-      }
-  
-      throw error;
+    // Define log levels and their priorities
+    const levels = {
+      'LOG': 1,
+      'INFO': 2,
+      'WARNING': 3,
+      'ERROR': 4
     };
   
+    /**
+     * Determines if a message should be logged based on its level.
+     * @param {string} level - The level of the log.
+     * @returns {boolean} True if should log, false otherwise.
+     */
+    const shouldLog = (level) => levels[level] >= levels[logLevel];
+  
+    /**
+     * Logs a general message.
+     * @param {string} message - The message to log.
+     */
+    const log = (message) => {
+      if (shouldLog('LOG')) {
+        // If the log level is 'LOG' and the message is too long, split it up
+        if (logLevel === 'LOG' && message.length > 5000) {
+          let start = 0;
+          while (start < message.length) {
+            const end = Math.min(start + 5000, message.length); // Calculate the end index
+            const chunk = message.substring(start, end);
+            console.log(chunk);
+            start += 5000;
+          }
+        } else {
+          console.log(message);
+        }
+      }
+    }
+  
+    /**
+     * Logs an informational message.
+     * @param {string} message - The message to log.
+     */
+    const info = (message) => {
+      if (shouldLog('INFO')) {
+        console.info(message);
+      }
+    };
+  
+    /**
+     * Logs a warning message.
+     * @param {string} message - The message to log.
+     */
+    const warn = (message) => {
+      if (shouldLog('WARNING')) {
+        console.warn(message);
+      }
+    };
+  
+    /**
+     * Logs an error message.
+     * @param {string} message - The message to log.
+     */
+    const error = (message) => {
+      if (shouldLog('ERROR')) {
+        console.error(message);
+      }
+    };
+  
+    // Return the logging methods, freezing the object to prevent modification
     return Object.freeze({
-      throwError
+      log,
+      info,
+      warn,
+      error,
     });
   };

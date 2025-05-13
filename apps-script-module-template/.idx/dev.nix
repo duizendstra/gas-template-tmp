@@ -14,6 +14,7 @@
     pkgs.google-clasp
     # Installs 'go-task', a task runner / build tool written in Go.
     pkgs.go
+    pkgs.nodejs
   ];
 
   # Defines environment variables that will be available within the workspace shell
