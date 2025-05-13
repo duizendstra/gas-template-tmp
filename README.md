@@ -4,20 +4,23 @@
 <!-- Add other relevant badges here, e.g., for contributions, clasp version -->
 <!-- Example: [![Clasp](https://img.shields.io/badge/clasp-^2.4.2-brightgreen.svg)](https://github.com/google/clasp) -->
 
-<a href="https://idx.google.com/import?url=https%3A%2F%2Fgithub.com%2Fduizendstra%2Fgas-template-tmp">
+
+
+<a href="https://studio.firebase.google.com/new?template=https%3A%2F%2Fgithub.com%2Fduizendstra%2Fgas-template-tmp">
   <picture>
     <source
       media="(prefers-color-scheme: dark)"
-      srcset="https://cdn.idx.dev/btn/open_dark_32.svg">
+      srcset="https://cdn.firebasestudio.dev/btn/open_dark_32.svg">
     <source
       media="(prefers-color-scheme: light)"
-      srcset="https://cdn.idx.dev/btn/open_light_32.svg">
+      srcset="https://cdn.firebasestudio.dev/btn/open_light_32.svg">
     <img
       height="32"
       alt="Open in Firebase Studio"
-      src="https://cdn.idx.dev/btn/open_blue_32.svg">
+      src="https://cdn.firebasestudio.dev/btn/open_blue_32.svg">
   </picture>
 </a>
+
 
 This repository provides a collection of Google Apps Script (GAS) application templates designed to accelerate development using [Firebase Studio (Project IDX)](https://idx.dev/). Each template offers a well-structured starting point for different types of GAS projects, complete with Nix environments for reproducible setups in Firebase Studio.
 
