@@ -7,11 +7,11 @@
  */
 function doGet(e) {
   // Use gasLogManager if available and configured, otherwise fallback to Logger
-  const currentLogManager = (typeof gasLogManager !== 'undefined') ? gasLogManager({}).logManager : Logger;
+  const currentLogManager = (typeof gasLogManager !== 'undefined') ? gasLogManager({}) : Logger;
   currentLogManager.log("WebApp: doGet called");
 
   try {
-    return HtmlService.createHtmlOutputFromFile('index') // Assumes index.html is at the same level
+    return HtmlService.createHtmlOutputFromFile('src/index') // Assumes index.html is at the same level
       .setTitle('Simple Hello App')
       .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.DEFAULT);
   } catch (error) {
@@ -29,7 +29,7 @@ function doGet(e) {
  */
 function handleHelloRequest(name) {
   // Determine the logger to use (gasLogManager or fallback to Logger)
-  const baseLogger = (typeof gasLogManager !== 'undefined') ? gasLogManager({}).logManager : Logger;
+  const baseLogger = (typeof gasLogManager !== 'undefined') ? gasLogManager({}) : Logger;
   baseLogger.log(`WebApp: handleHelloRequest received name: '${name}'`);
 
   try {
