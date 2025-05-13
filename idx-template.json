@@ -15,9 +15,9 @@
       "type": "enum",
       "default": "apps-script-module-template",
       "options": {
-        "apps-script-module-template": "Kickstart your Apps Script project with a foundational modular structure (Crockford-style) for organized and maintainable code.",
-        "apps-script-engine-template": "Kickstart your Google Apps Script projects with this robust, highly configurable template that includes essential development tools right out of the box.",
-        "apps-script-starter-template": "Kickstart your Apps Script journey with a minimal, bare-bones starter template, perfect for simple scripts or learning the basics."
+        "apps-script-module-template": "Modular structure for clean, maintainable Apps Script.",
+        "apps-script-engine-template": "Robust & highly configurable; essential dev tools included.",
+        "apps-script-starter-template": "Minimal & bare-bones; perfect for simple scripts or learning."
       },
       "required": true
     }
