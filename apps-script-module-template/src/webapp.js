@@ -11,7 +11,7 @@ function doGet(e) {
   currentLogManager.log("WebApp: doGet called");
 
   try {
-    return HtmlService.createHtmlOutputFromFile('src/index') // Assumes index.html is at the same level
+    return HtmlService.createHtmlOutputFromFile('index') // Assumes index.html is at the same level
       .setTitle('Simple Hello App')
       .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.DEFAULT);
   } catch (error) {
