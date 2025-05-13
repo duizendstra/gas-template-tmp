@@ -11,12 +11,12 @@
   "params": [
     {
       "id": "template_choice",
-      "name": "Project Template",
+      "name": "Project Type",
       "type": "enum",
       "default": "gas-basic-module-template",
       "options": {
         "gas-basic-module-template": "Basic Modular Apps Script (Crockford-style)",
-        "gas-01-template": "01",
+        "apps-script-engine-template": "Kickstart your Google Apps Script projects with this robust, highly configurable template that includes essential development tools right out of the box.",
         "gas-basic-starter-template": "Basic starter"
       },
       "required": true
