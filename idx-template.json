@@ -1,0 +1,23 @@
+{
+  "name": "Google Apps Script Modular Starters",
+  "description": "Start a Google Apps Script project with a well-defined modular structure.",
+  "categories": [
+    "Google Workspace",
+    "Serverless",
+    "Automation"
+  ],
+  "icon": "https://www.gstatic.com/images/branding/product/1x/apps_script_48dp.png",
+  "publisher": "Your Name/Organization",
+  "params": [
+    {
+      "id": "template_choice",
+      "name": "Project Template",
+      "type": "enum",
+      "default": "gas-basic-module-template",
+      "options": {
+        "gas-basic-module-template": "Basic Modular Apps Script (Crockford-style)"
+      },
+      "required": true
+    }
+  ]
+}
